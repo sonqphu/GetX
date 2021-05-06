@@ -109,6 +109,8 @@ class HomeView extends GetView<HomeController> {
                 ],
               );
             },
+            onLoading: Center(child: CircularProgressIndicator()),
+            onError: (error) => Center(child: Text(error.toString())),
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(

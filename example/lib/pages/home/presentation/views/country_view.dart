@@ -2,10 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../controllers/counter_controller.dart';
 
 import '../controllers/home_controller.dart';
 
 class CountryView extends GetView<HomeController> {
+ 
+  final CounterController ctrl = Get.put(CounterController());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,26 +29,45 @@ class CountryView extends GetView<HomeController> {
               elevation: 0,
               centerTitle: true,
             ),
-            body: Center(
-              child: ListView.builder(
-                  itemCount: controller.state!.countries.length,
-                  itemBuilder: (context, index) {
-                    final country = controller.state!.countries[index];
-                    return ListTile(
-                      onTap: () {
-                        Get.toNamed('/home/country/details',
-                            arguments: country);
+            body: SingleChildScrollView(
+                          child: Center(
+                child: Column(
+                  children: [
+                    GetBuilder<CounterController>(
+                        builder: (_) => Text(
+                              'clicks: ${ctrl.countIncre}',
+                            )),
+                    ElevatedButton(
+                      child: Text('Incre number'),
+                      onPressed: () async {
+                        ctrl.increment();
                       },
-                      trailing: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            "https://flagpedia.net/data/flags/normal/${country.countryCode.toLowerCase()}.png"),
-                      ),
-                      title: Text(country.country),
-                      subtitle: Text(
-                          // ignore: lines_longer_than_80_chars
-                          '${'total_infecteds'.tr}${' ${country.totalConfirmed}'}'),
-                    );
-                  }),
+                    ),
+                    Container(
+                      height: 800,
+                      child: ListView.builder(
+                          itemCount: controller.state!.countries.length,
+                          itemBuilder: (context, index) {
+                            final country = controller.state!.countries[index];
+                            return ListTile(
+                              onTap: () {
+                                Get.toNamed('/home/country/details',
+                                    arguments: country);
+                              },
+                              trailing: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    "https://flagpedia.net/data/flags/normal/${country.countryCode.toLowerCase()}.png"),
+                              ),
+                              title: Text(country.country),
+                              subtitle: Text(
+                                  // ignore: lines_longer_than_80_chars
+                                  '${'total_infecteds'.tr}${' ${country.totalConfirmed}'}'),
+                            );
+                          }),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),

@@ -14,8 +14,24 @@ class CounterView extends StatelessWidget {
           children: [
             GetBuilder<CounterController>(
                 builder: (_) => Text(
-                      'clicks: ${controller.count}',
+                      'clicks: ${controller.countIncre}',
                     )),
+            GetBuilder<CounterController>(
+                builder: (_) => Text(
+                      'clicks: ${controller.countDecre}',
+                    )),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              child: Text('Decre number'),
+              onPressed: () async {
+                controller.decrement();
+              },
+            ),
+            SizedBox(
+              height: 40,
+            ),
             ElevatedButton(
               child: Text('Next Route'),
               onPressed: () {
@@ -26,28 +42,64 @@ class CounterView extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed:()
-          async { 
-            controller.increment();
-            controller.getShareValue();
-          },  
-          ),
+        child: Icon(Icons.add),
+        onPressed: () async {
+          controller.increment();
+          controller.getShareValue();
+        },
+      ),
     );
   }
 }
+
 class Second extends StatelessWidget {
   final CounterController ctrl = Get.find();
   @override
-  Widget build(context){
-     return Scaffold(body: Center(child: Padding(
-       padding: const EdgeInsets.only(top:180.0),
-       child: Column(
-         children: [
-           Text("${ctrl.count}"),
-           Text("${ctrl.getStorageValue}"),
-         ],
-       ),
-     )));
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+            child: Padding(
+      padding: const EdgeInsets.only(top: 180.0),
+      child: Column(
+        children: [
+          Text("${ctrl.countIncre}"),
+          Text("${ctrl.getStorageValue}"),
+        ],
+      ),
+    )));
+  }
+}
+
+class TeststateFull extends StatefulWidget {
+  @override
+  _aaaState createState() => _aaaState();
+}
+
+// ignore: camel_case_types
+class _aaaState extends State<TeststateFull> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+            child: Padding(
+      padding: const EdgeInsets.only(top: 180.0),
+      child: Column(
+        children: [
+          Text("123"),
+          Text("456"),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            child: Text('Decre number'),
+            onPressed: () {
+              setState(() {
+                var a = 0;
+              });
+            },
+          ),
+        ],
+      ),
+    )));
   }
 }

@@ -4,11 +4,19 @@ import 'package:get_storage/get_storage.dart';
 
 class CounterController extends GetxController {
   // ignore: type_annotate_public_apis
-  var count = 0;
+  var countIncre = 0;
+  // ignore: type_annotate_public_apis
+  var countDecre = 0;
   // ignore: type_annotate_public_apis
   var getStorageValue = "";
   void increment() {
-    count++;
+    countIncre++;
+    update();
+  }
+
+
+  void decrement() {
+    countDecre--;
     update();
   }
 
@@ -17,7 +25,7 @@ class CounterController extends GetxController {
   {
     var getStorage = GetStorage();
     getStorage.write('getStorageValueKey', 'Chuỗi lấy từ GetStorage');
-    getStorageValue = "${getStorage.read('getStorageValueKey')} $count";
+    getStorageValue = "${getStorage.read('getStorageValueKey')} $countIncre";
     update();
   }
 }
